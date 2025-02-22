@@ -1,7 +1,6 @@
 package com.aleix.XposeAPI.service;
 
 import com.aleix.XposeAPI.model.ContactInformation;
-import com.aleix.XposeAPI.repository.AddressRepository;
 import com.aleix.XposeAPI.repository.ContactInformationRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -13,7 +12,7 @@ public class ContactInformationService {
 
     private final ContactInformationRepository contactInformationRepository;
 
-    public ContactInformationService(ContactInformationRepository contactInformationRepository, AddressRepository addressRepository) {
+    public ContactInformationService(ContactInformationRepository contactInformationRepository) {
         this.contactInformationRepository = contactInformationRepository;
     }
 
@@ -34,6 +33,7 @@ public class ContactInformationService {
         return contactInformationRepository.findById(id).map(contactInformation -> {
             contactInformation.setEmail(contactInformationDetails.getEmail());
             contactInformation.setPhoneNumber(contactInformationDetails.getPhoneNumber());
+            contactInformation.setAddress(contactInformationDetails.getAddress());
             return contactInformationRepository.save(contactInformation);
         });
     }

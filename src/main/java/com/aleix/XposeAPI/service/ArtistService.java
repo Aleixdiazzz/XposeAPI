@@ -33,6 +33,7 @@ public class ArtistService {
             artist.setName(artistDetails.getName());
             artist.setSurname(artistDetails.getSurname());
             artist.setArtisticName(artistDetails.getArtisticName());
+            artist.setContactInformation(artistDetails.getContactInformation());
             return artistRepository.save(artist);
         });
     }
