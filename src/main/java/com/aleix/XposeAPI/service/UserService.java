@@ -46,5 +46,9 @@ public class UserService {
         }
         return false;
     }
+
+    public Optional<User> loginUser(String email, String password) {
+        return userRepository.findByEmailAndPasswordHash(email, password);
+    }
 }
 

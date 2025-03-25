@@ -1,5 +1,6 @@
 package com.aleix.XposeAPI.controller;
 
+import com.aleix.XposeAPI.model.LoginRequest;
 import com.aleix.XposeAPI.model.User;
 import com.aleix.XposeAPI.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -49,4 +50,11 @@ public class UserController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> loginUser(@RequestBody LoginRequest loginRequest) {
+        Optional<User> loggedUser = userService.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
+        return loggedUser.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
 }
