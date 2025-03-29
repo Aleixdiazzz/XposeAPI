@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -29,7 +31,13 @@ public class User {
     @Column(nullable = false)
     private String passwordHash;
 
+
     @Column(nullable = false, updatable = false)
-    private java.time.Instant createdAt = java.time.Instant.now();
+    private Instant createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = Instant.now();
+    }
 
 }

@@ -2,6 +2,7 @@ package com.aleix.XposeAPI.service;
 
 import com.aleix.XposeAPI.model.User;
 import com.aleix.XposeAPI.repository.UserRepository;
+import com.aleix.XposeAPI.specification.UserSpecifications;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +50,10 @@ public class UserService {
 
     public Optional<User> loginUser(String email, String password) {
         return userRepository.findByEmailAndPasswordHash(email, password);
+    }
+
+    public List<User> filterUsers (String name, String surname, String email){
+        return userRepository.findAll(UserSpecifications.filterUsers(name, surname, email));
     }
 }
 

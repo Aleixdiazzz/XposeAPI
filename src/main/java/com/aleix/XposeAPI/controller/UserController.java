@@ -31,6 +31,13 @@ public class UserController {
         return user.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/filter")
+    public List<User> filterUsers(@RequestParam(required = false) String name,
+                                  @RequestParam(required = false) String surname,
+                                  @RequestParam(required = false) String email) {
+        return userService.filterUsers(name, surname, email);
+    }
+
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User savedUser = userService.createUser(user);
