@@ -1,7 +1,10 @@
 package com.aleix.XposeAPI.service;
 
 import com.aleix.XposeAPI.model.Artist;
+import com.aleix.XposeAPI.model.User;
 import com.aleix.XposeAPI.repository.ArtistRepository;
+import com.aleix.XposeAPI.specification.ArtistSpecifications;
+import com.aleix.XposeAPI.specification.UserSpecifications;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +48,10 @@ public class ArtistService {
             return true;
         }
         return false;
+    }
+
+    public List<Artist> filterArtists (String name, String surname, String artisticName){
+        return artistRepository.findAll(ArtistSpecifications.filterArtists(name, surname, artisticName));
     }
 }
 

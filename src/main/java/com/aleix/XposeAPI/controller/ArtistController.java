@@ -1,6 +1,7 @@
 package com.aleix.XposeAPI.controller;
 
 import com.aleix.XposeAPI.model.Artist;
+import com.aleix.XposeAPI.model.User;
 import com.aleix.XposeAPI.service.ArtistService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,13 @@ public class ArtistController {
     public ResponseEntity<Artist> getArtistById(@PathVariable Long id) {
         Optional<Artist> artist = artistService.getArtistById(id);
         return artist.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/filter")
+    public List<Artist> filterArtists(@RequestParam(required = false) String name,
+                                  @RequestParam(required = false) String surname,
+                                  @RequestParam(required = false) String artisticName) {
+        return artistService.filterArtists(name, surname, artisticName);
     }
 
     @PostMapping
