@@ -30,7 +30,7 @@ public class AddressService {
 
     public Optional<Address> updateAddress(Long id, Address addressDetails) {
         return addressRepository.findById(id).map(address -> {
-            address.setCity(addressDetails.getCity());
+            address.setCity(addressDetails .getCity());
             address.setStreet(addressDetails.getStreet());
             address.setNumber(addressDetails.getNumber());
             address.setPostalCode(addressDetails.getPostalCode());
