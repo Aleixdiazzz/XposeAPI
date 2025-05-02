@@ -1,5 +1,6 @@
 package com.aleix.XposeAPI.controller;
 
+import com.aleix.XposeAPI.model.Artist;
 import com.aleix.XposeAPI.model.Serie;
 import com.aleix.XposeAPI.service.SerieService;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,13 @@ public class SerieController {
     public ResponseEntity<Serie> getSerieById(@PathVariable Long id) {
         Optional<Serie> serie = serieService.getSerieById(id);
         return serie.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/filter")
+    public List<Serie> filterSeries(@RequestParam(required = false) String name,
+                                      @RequestParam(required = false) String artistId,
+                                      @RequestParam(required = false) Boolean active) {
+        return serieService.filterSeries(name, artistId, active);
     }
 
     @PostMapping

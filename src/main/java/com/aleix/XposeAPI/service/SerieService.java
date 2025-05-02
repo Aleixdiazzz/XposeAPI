@@ -1,7 +1,10 @@
 package com.aleix.XposeAPI.service;
 
+import com.aleix.XposeAPI.model.Artist;
 import com.aleix.XposeAPI.model.Serie;
 import com.aleix.XposeAPI.repository.SerieRepository;
+import com.aleix.XposeAPI.specification.ArtistSpecifications;
+import com.aleix.XposeAPI.specification.SerieSpecifications;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,6 +47,10 @@ public class SerieService {
             return true;
         }
         return false;
+    }
+
+    public List<Serie> filterSeries (String name, String artistId, Boolean active){
+        return serieRepository.findAll(SerieSpecifications.filterSeries(name, artistId, active));
     }
 }
 
