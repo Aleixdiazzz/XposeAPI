@@ -19,13 +19,10 @@ public class Asset {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
     private String type;
 
-    @Column(nullable = false)
     private String comment;
 
     @Column(nullable = false)
