@@ -43,6 +43,7 @@ public class AssetService {
             asset.setActive(assetDetails.isActive() );
             asset.setAuthors(assetDetails.getAuthors());
             asset.setSeries(assetDetails.getSeries());
+            asset.setUrl(assetDetails.getUrl());
             return assetRepository.save(asset);
         });
     }
