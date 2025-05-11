@@ -20,8 +20,14 @@ public class FileUploadService {
     @Value("${minio.bucket}")
     private String bucketName;
 
+    @Value("${minio.logoBucket}")
+    private String logoBucketName;
+
     @Value("${minio.assetUrl}")
     private String urlPrefix;
+
+    @Value("${minio.logoUrl}")
+    private String logoUrlPrefix;
 
     private final MinioClient minioClient;
     private final SerieService serieService;
@@ -122,4 +128,23 @@ public class FileUploadService {
 
         return urlPrefix + fileName;
     }
+
+    public String uploadLogo(MultipartFile file) throws Exception {
+
+        ensureBucketExists();
+
+        String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
+
+        minioClient.putObject(
+                PutObjectArgs.builder()
+                        .bucket(logoBucketName)
+                        .object(fileName)
+                        .stream(file.getInputStream(), file.getSize(), -1)
+                        .contentType(file.getContentType())
+                        .build()
+        );
+
+        return logoUrlPrefix + fileName;
+    }
+
 }
