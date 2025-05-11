@@ -35,8 +35,9 @@ public class SerieService {
     public Optional<Serie> updateSerie(Long id, Serie serieDetails) {
         return serieRepository.findById(id).map(serie -> {
             serie.setName(serieDetails.getName());
-            serie.setActive(serie.isActive());
-            serie.setArtists(serie.getArtists());
+            serie.setDescription(serieDetails.getDescription());
+            serie.setActive(serieDetails.isActive());
+            serie.setArtists(serieDetails.getArtists());
             return serieRepository.save(serie);
         });
     }
@@ -53,4 +54,3 @@ public class SerieService {
         return serieRepository.findAll(SerieSpecifications.filterSeries(name, artistId, active));
     }
 }
-
