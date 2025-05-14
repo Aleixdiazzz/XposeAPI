@@ -3,6 +3,7 @@ package com.aleix.XposeAPI.controller;
 import com.aleix.XposeAPI.model.Asset;
 import com.aleix.XposeAPI.model.Serie;
 import com.aleix.XposeAPI.service.AssetService;
+import com.aleix.XposeAPI.service.AssetsFromService;
 import com.aleix.XposeAPI.service.FileUploadService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,12 @@ public class AssetController {
 
     private final AssetService assetService;
     private final FileUploadService fileUploadService;
+    private final AssetsFromService assetsFromService;
 
-    public AssetController(AssetService assetService, FileUploadService fileUploadService) {
+    public AssetController(AssetService assetService, FileUploadService fileUploadService, AssetsFromService assetsFromService) {
         this.assetService = assetService;
         this.fileUploadService = fileUploadService;
+        this.assetsFromService = assetsFromService;
     }
 
     @GetMapping
@@ -32,12 +35,12 @@ public class AssetController {
 
     @GetMapping("/serie/{id}")
     public List<Asset> getAllSerieAssets(@PathVariable Long id ){
-        return assetService.getAllAssetsFromSerie(id);
+        return assetsFromService.getAllAssetsFromSerie(id);
     }
 
     @GetMapping("/artist/{id}")
     public List<Asset> getAllArtistAssets(@PathVariable Long id ){
-        return assetService.getAllAssetsFromArtist(id);
+        return assetsFromService.getAllAssetsFromArtist(id);
     }
 
     @DeleteMapping("/{id}")

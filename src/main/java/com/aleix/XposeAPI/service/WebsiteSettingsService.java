@@ -32,9 +32,7 @@ public class WebsiteSettingsService {
         return websiteSettingsRepository.findById(id).map(websiteSettings -> {
             websiteSettings.setName(websiteSettingsDetails.getName());
             websiteSettings.setWebsiteName(websiteSettingsDetails.getWebsiteName());
-            websiteSettings.setAddress(websiteSettingsDetails.getAddress());
-            websiteSettings.setEmail(websiteSettingsDetails.getEmail());
-            websiteSettings.setPhone(websiteSettingsDetails.getPhone());
+            websiteSettings.setContactInformation(websiteSettingsDetails.getContactInformation());
             websiteSettings.setFavIconUrl(websiteSettingsDetails.getFavIconUrl());
             return websiteSettingsRepository.save(websiteSettings);
         });

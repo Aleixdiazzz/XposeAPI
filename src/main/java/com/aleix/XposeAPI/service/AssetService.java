@@ -66,23 +66,6 @@ public class AssetService {
         }
         return false;
     }
-
-    public List<Asset> getAllAssetsFromSerie(Long id){
-        return assetRepository.findAll().stream()
-                .filter(asset -> asset.getSeries() != null && 
-                        asset.getSeries().stream()
-                                .anyMatch(serie -> serie.getId().equals(id)))
-                .toList();
-    }
-
-    public List<Asset> getAllAssetsFromArtist(Long id){
-        return assetRepository.findAll().stream()
-                .filter(asset -> asset.getAuthors() != null &&
-                        asset.getAuthors().stream()
-                                .anyMatch(author -> author.getId().equals(id)))
-                .toList();
-    }
-
     public List<Asset> filterAssets (String name, String type, Boolean active, String artistId, String serieId){
         return assetRepository.findAll(AssetSpecifications.filterAssets(name, type, active, artistId,  serieId));
     }

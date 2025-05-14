@@ -20,14 +20,10 @@ public class WebsiteSettings {
     @Column(nullable = false)
     private String websiteName;
 
-    @Column(nullable = false)
-    private String address;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_information_id")
+    private ContactInformation contactInformation;
 
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private String phone;
 
     @Column(nullable = false)
     private String favIconUrl;

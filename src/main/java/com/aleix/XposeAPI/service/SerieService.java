@@ -1,12 +1,14 @@
 package com.aleix.XposeAPI.service;
 
 import com.aleix.XposeAPI.model.Artist;
+import com.aleix.XposeAPI.model.CollectionsPublicRS;
 import com.aleix.XposeAPI.model.Serie;
 import com.aleix.XposeAPI.repository.SerieRepository;
 import com.aleix.XposeAPI.specification.ArtistSpecifications;
 import com.aleix.XposeAPI.specification.SerieSpecifications;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,9 +17,11 @@ import java.util.Optional;
 public class SerieService {
 
     private final SerieRepository serieRepository;
+    private final AssetsFromService assetsFromService;
 
-    public SerieService(SerieRepository serieRepository) {
+    public SerieService(SerieRepository serieRepository, AssetsFromService assetsFromService) {
         this.serieRepository = serieRepository;
+        this.assetsFromService = assetsFromService;
     }
 
     public List<Serie> getAllSeries() {
@@ -52,5 +56,20 @@ public class SerieService {
 
     public List<Serie> filterSeries (String name, String artistId, Boolean active){
         return serieRepository.findAll(SerieSpecifications.filterSeries(name, artistId, active));
+    }
+
+    public List<CollectionsPublicRS> getAllPublicSeries() {
+        List<CollectionsPublicRS> collectionsPublicRS = new ArrayList<>();
+        List<Serie> series = serieRepository.findByActiveTrue();
+
+        for (Serie serie : series) {
+            CollectionsPublicRS collectionsPublicRs = new CollectionsPublicRS();
+            collectionsPublicRs.setSerie(serie);
+            collectionsPublicRs.setAssets(assetsFromService.getAllAssetsFromSerie(serie.getId()));
+            collectionsPublicRs.setImageUrl(collectionsPublicRs.getAssets().getFirst().getUrl());
+            collectionsPublicRS.add(collectionsPublicRs);
+        }
+
+        return collectionsPublicRS;
     }
 }

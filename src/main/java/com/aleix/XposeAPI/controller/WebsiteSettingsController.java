@@ -1,5 +1,7 @@
 package com.aleix.XposeAPI.controller;
 
+import com.aleix.XposeAPI.model.Address;
+import com.aleix.XposeAPI.model.ContactInformation;
 import com.aleix.XposeAPI.model.WebsiteSettings;
 import com.aleix.XposeAPI.service.FileUploadService;
 import com.aleix.XposeAPI.service.WebsiteSettingsService;
@@ -34,6 +36,16 @@ public class WebsiteSettingsController {
         return websiteSettings.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/contact")
+    public ResponseEntity<WebsiteSettings> getLatestWebsiteSettings() {
+        List<WebsiteSettings> websiteSettingsList = websiteSettingsService.getAllWebsiteSettings();
+        if (websiteSettingsList.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        WebsiteSettings latestWebsiteSettings = websiteSettingsList.getLast();
+        return ResponseEntity.ok(latestWebsiteSettings);
+    }
+
     @PostMapping
     public ResponseEntity<WebsiteSettings> createWebsiteSettings(@RequestBody WebsiteSettings websiteSettings) {
         WebsiteSettings savedWebsiteSettings = websiteSettingsService.createWebsiteSettings(websiteSettings);
@@ -43,21 +55,39 @@ public class WebsiteSettingsController {
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<WebsiteSettings> updateWebsiteSettings(
             @PathVariable Long id,
-            @RequestParam("address") String address,
             @RequestParam("email") String email,
             @RequestParam("favIconUrl") String favIconUrl,
             @RequestParam("name") String name,
             @RequestParam("phone") String phone,
+            @RequestParam("street") String street,
+            @RequestParam("number") String number,
+            @RequestParam("postalCode") String postalCode,
+            @RequestParam("city") String city,
+            @RequestParam("country") String country,
             @RequestParam("websiteName") String websiteName,
             @RequestPart(value = "file", required = false) MultipartFile file) throws Exception {
 
         WebsiteSettings websiteSettings = new WebsiteSettings();
-        websiteSettings.setAddress(address);
-        websiteSettings.setEmail(email);
+        ContactInformation contactInformation = new ContactInformation();
+        Address address = new Address();
+
+        address.setStreet(street);
+        address.setNumber(number);
+        address.setPostalCode(postalCode);
+        address.setCity(city);
+        address.setCountry(country);
+
+
+        contactInformation.setEmail(email);
+        contactInformation.setPhoneNumber(phone);
+        contactInformation.setAddress(address);
+
+        websiteSettings.setContactInformation(contactInformation);
+
         websiteSettings.setFavIconUrl(favIconUrl);
         websiteSettings.setName(name);
-        websiteSettings.setPhone(phone);
         websiteSettings.setWebsiteName(websiteName);
+
 
         if (file != null && !file.isEmpty()) {
             websiteSettings.setFavIconUrl(fileUploadService.uploadLogo(file));

@@ -1,6 +1,6 @@
 package com.aleix.XposeAPI.controller;
 
-import com.aleix.XposeAPI.model.Artist;
+import com.aleix.XposeAPI.model.CollectionsPublicRS;
 import com.aleix.XposeAPI.model.Serie;
 import com.aleix.XposeAPI.service.SerieService;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +23,11 @@ public class SerieController {
     @GetMapping
     public List<Serie> getAllSeries() {
         return serieService.getAllSeries();
+    }
+
+    @GetMapping("/public-collections")
+    public List<CollectionsPublicRS> getPublicCollections() {
+        return serieService.getAllPublicSeries();
     }
 
     @GetMapping("/{id}")
