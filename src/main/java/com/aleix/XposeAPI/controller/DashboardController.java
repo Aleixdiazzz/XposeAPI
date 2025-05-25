@@ -20,8 +20,14 @@ public class DashboardController {
         this.dashboardService = dashboardService;
     }
 
+    /**
+     * Retrieves statistical data for the dashboard.
+     *
+     * @return a list of integers representing various dashboard statistics
+     */
     @GetMapping
     public List<Integer> getDashboardStats() {
         return dashboardService.getDashboardStats();
     }
+
 }

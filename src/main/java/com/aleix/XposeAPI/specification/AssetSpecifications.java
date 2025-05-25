@@ -12,7 +12,21 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Specification class for Asset entities.
+ * Provides methods to create dynamic queries for filtering Assets based on various criteria.
+ */
 public class AssetSpecifications {
+    /**
+     * Creates a specification for filtering Assets based on provided criteria.
+     * 
+     * @param name Optional name filter (case-insensitive, accent-insensitive)
+     * @param type Optional type filter (case-insensitive, accent-insensitive)
+     * @param active Optional active status filter
+     * @param artistId Optional artist ID filter
+     * @param serieId Optional serie ID filter
+     * @return Specification for filtering Assets
+     */
     public static Specification<Asset> filterAssets(String name, String type, Boolean active,  String artistId, String serieId) {
         return (Root<Asset> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -48,6 +62,12 @@ public class AssetSpecifications {
         };
     }
 
+    /**
+     * Removes accents from a string for accent-insensitive searching.
+     * 
+     * @param text The text to remove accents from
+     * @return The text with accents removed
+     */
     private static String removeAccents(String text) {
         return Normalizer.normalize(text, Normalizer.Form.NFD)
                 .replaceAll("\\p{M}", "");

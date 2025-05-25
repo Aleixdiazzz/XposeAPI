@@ -22,6 +22,19 @@ public class FileUploadController {
         this.fileUploadService = fileUploadService;
     }
 
+    /**
+     * Handles the upload of an image file along with its metadata.
+     *
+     * @param file the image file to upload
+     * @param name the name of the image
+     * @param description a description of the image
+     * @param type the type/category of the image
+     * @param active a flag indicating whether the image is active
+     * @param artistId the ID of the artist associated with the image
+     * @param collectionId the ID of the collection the image belongs to
+     * @return a {@link ResponseEntity} containing the URL of the uploaded image if successful,
+     *         or an error message if the upload fails
+     */
     @PostMapping("/upload")
     public ResponseEntity<String> uploadImage(
             @RequestParam("image") MultipartFile file,
@@ -42,6 +55,13 @@ public class FileUploadController {
         }
     }
 
+    /**
+     * Deletes a file from storage based on the provided URL.
+     *
+     * @param url the URL of the file to delete
+     * @return a {@link ResponseEntity} confirming deletion if successful,
+     *         or an error message if the deletion fails
+     */
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteFile(@RequestParam("url") String url) {
         try {
@@ -53,4 +73,5 @@ public class FileUploadController {
                     .body("Delete failed: " + e.getMessage());
         }
     }
+
 }

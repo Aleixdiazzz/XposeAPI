@@ -9,7 +9,19 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Specification class for Serie entities.
+ * Provides methods to create dynamic queries for filtering Series based on various criteria.
+ */
 public class SerieSpecifications {
+    /**
+     * Creates a specification for filtering Series based on provided criteria.
+     * 
+     * @param name Optional name filter (case-insensitive, accent-insensitive)
+     * @param artistId Optional artist ID filter
+     * @param active Optional active status filter
+     * @return Specification for filtering Series
+     */
     public static Specification<Serie> filterSeries(String name, String artistId, Boolean active) {
         return (Root<Serie> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -35,6 +47,12 @@ public class SerieSpecifications {
         };
     }
 
+    /**
+     * Removes accents from a string for accent-insensitive searching.
+     * 
+     * @param text The text to remove accents from
+     * @return The text with accents removed
+     */
     private static String removeAccents(String text) {
         return Normalizer.normalize(text, Normalizer.Form.NFD)
                 .replaceAll("\\p{M}", "");
