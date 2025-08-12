@@ -19,7 +19,7 @@ public class Serie {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100000)
     private String description;
 
     @Column(nullable = false)
