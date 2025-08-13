@@ -136,6 +136,24 @@ xposeApi/
 
 ---
 
+---
+
+### Network Configuration
+
+```bash
+
+# Create a network
+docker network create xpose-network
+
+# Connect existing containers to the network
+docker network connect xpose-network postgres
+docker network connect xpose-network minio
+docker network connect xpose-network java-container
+
+```
+
+---
+
 ## 📌 Notes
 
 - Make sure your JAR filename in `Dockerfile` matches exactly (e.g. `XposeAPI.jar`)
@@ -147,3 +165,6 @@ xposeApi/
 ## 📬 Questions?
 
 Reach out to your deployment manager or the maintainer of this repo.
+
+
+
