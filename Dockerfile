@@ -3,7 +3,7 @@ FROM eclipse-temurin:21-jdk-jammy
 WORKDIR /app
 
 # Copy the built JAR file into the container
-COPY target/XposeAPI.jar app.jar
+COPY XposeAPI.jar app.jar
 
 # Expose the port your app runs on (default 8080)
 EXPOSE 8080
