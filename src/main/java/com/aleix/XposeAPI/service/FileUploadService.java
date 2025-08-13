@@ -104,7 +104,7 @@ public class FileUploadService {
                         .build()
         );
 
-        String fullUrl = urlPrefix + fileName;
+        String fullUrl = minioUrlForDb + fileName;
         asset.setUrl(fullUrl);
 
         assetRepository.save(asset);
