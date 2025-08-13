@@ -34,6 +34,9 @@ public class FileUploadService {
     @Value("${minio.logoUrl}")
     private String logoUrlPrefix;
 
+    @Value("${minio.minioUrlForDb}")
+    private String minioUrlForDb;
+
     private final MinioClient minioClient;
     private final SerieService serieService;
     private final ArtistService artistService;
